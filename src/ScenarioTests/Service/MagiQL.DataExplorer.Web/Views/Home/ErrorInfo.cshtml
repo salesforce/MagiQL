@@ -1,0 +1,16 @@
+﻿@model MagiQL.Framework.Model.Response.Base.ResponseError
+
+<div id="error" class="panel panel-danger">
+    <div class="panel-heading">Error</div>
+    <div class="panel-body">
+        <div id="error-message">
+            @Model.Message
+        </div>
+        @if (!string.IsNullOrEmpty(Model.StackTrace))
+        {
+            <div id="error-trace">
+                <pre>@Model.StackTrace</pre>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,219 @@
+﻿@using MagiQL.Framework.Model
+@model List<MagiQL.Framework.Model.Response.ColumnDefinition>
+
+@{
+
+
+    List<SelectListItem> columnSelectList = BuildList(Model.ToList(), false, ViewBag.SelectedColumnName);
+    List<SelectListItem> groupSelectList = BuildList(Model.ToList(), true, ViewBag.SelectedColumnName);
+    List<SelectListItem> summarizeSelectList = BuildList(Model.ToList(), true, ViewBag.SelectedColumnName);
+
+    summarizeSelectList.ForEach(x => x.Selected = false);
+    summarizeSelectList.Insert(0, new SelectListItem() { Selected = true, Text = "None", Value = "0" });
+
+    List<SelectListItem> temporalAggregationOptions = new List<SelectListItem>
+    {
+        new SelectListItem() {Text = "Total", Value = ((int) TemporalAggregation.Total).ToString()},
+        new SelectListItem() {Text = "By Day (in account timezone)", Value = ((int) TemporalAggregation.ByDay).ToString()},
+        new SelectListItem() {Text = "By Hour (in UTC)", Value = ((int) TemporalAggregation.ByHour).ToString()},
+    };
+    
+    List<SelectListItem> dateRangeTypeOptions = new List<SelectListItem>
+    {
+        new SelectListItem() {Text = "Account Time", Value = ((int) DateRangeType.AccountTime).ToString()},
+        new SelectListItem() {Text = "UTC (cannot be used with Daily aggregation)", Value = ((int) DateRangeType.Utc).ToString()}
+    };
+}
+
+@functions
+{
+    public static List<SelectListItem> BuildList(List<MagiQL.Framework.Model.Response.ColumnDefinition> Model, bool applyCanGroupBy, string selectedColumnName)
+    {
+        List<SelectListItem> result = new List<SelectListItem>();
+        int i = 0;
+        bool selected = false;
+        foreach (var group in Model.GroupBy(x => x.MainCategory))
+        {
+            var titleItem = new SelectListItem
+            {
+                Value = null,
+                Text = "___" + group.Key + "____",
+            };
+            result.Add(titleItem);
+
+            foreach (var item in group.OrderBy(x=>x.DisplayName))
+            {
+                var listItem = new SelectListItem
+                {
+                    Value = item.Id.ToString(),
+                    Text = item.DisplayName,
+                    Selected = !string.IsNullOrEmpty(selectedColumnName)? item.UniqueName == selectedColumnName : !selected
+                };
+                selected = selected || listItem.Selected;
+
+                if (!applyCanGroupBy || item.CanGroupBy)
+                {
+                    result.Add(listItem);
+                }
+                i++;
+            }
+        }
+        return result;
+    }
+}
+ 
+
+<hr /> 
+
+
+<div class="form-group">
+    <label for="">Group By</label>
+    @Html.DropDownList("group", groupSelectList, new { @class = "combobox" }) 
+</div>
+<div class="form-group">
+    <label for="">Summarize By</label>
+    @Html.DropDownList("summarize", summarizeSelectList, new { @class = "combobox" }) 
+</div>
+<div class="form-group">
+    <label for="">Sort By</label>
+    @Html.DropDownList("sort", columnSelectList, new { @class = "combobox" }) 
+    <div class="checkbox">
+        <label>
+           @Html.CheckBox("sortDesc", true)
+            Descending
+        </label>
+    </div>
+</div>
+
+<hr />
+
+<div class="panel-formset">
+    <div class="form-group">
+        <label for="">Temporal Aggregation</label>
+        @Html.DropDownList("temporalAggregation", temporalAggregationOptions, new { @class = "form-control form-control-sm" }) 
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="">Start Date</label>
+            <input type="text" name="startDate" class="form-control  form-control-sm datepicker" id="" placeholder="">
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="">End Date</label>
+            <input type="text" name="endDate" class="form-control  form-control-sm datepicker" id="" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="">Date Range Type</label>        
+        @Html.DropDownList("dateRangeType", dateRangeTypeOptions, new { @class = "form-control form-control-sm" })
+    </div>
+</div>
+
+
+<hr />
+
+
+<div class="panel-formset clearfix">
+    <div class="form-group">
+        <label for="">Text Search</label>
+        @Html.TextBox("q", null, new { @class = "form-control  form-control-sm" })
+    </div>
+
+    <div>
+        <label>Add Filters</label>
+        <div id="FirstFilter">
+            <div class="form-group filter-group">
+                <div>
+                    @Html.DropDownList("filterField-val", columnSelectList, new { @class = "combobox" })
+                </div>
+                <div>
+                    <select class="form-control  form-control-sm  pull-left" name="filterMode-val" style="width:70px;">
+                        <option>></option>
+                        <option>>=</option>
+                        <option><</option>
+                        <option><=</option>
+                        <option>=</option>
+                        <option>!=</option>
+                    </select>
+                    @Html.TextBox("filterValue-val", null, new { @class = "filter-value-text form-control form-control-sm pull-left" })
+                    <a href="javascript:void(0)" id="AddFilter" class="btn btn-default pull-left">Add</a>
+                </div>
+            </div>
+        </div>
+
+
+   
+        
+        <div id="ExtrafiltersTemplate" style="display:none;">
+            <div class="filter-group" style="clear: both">
+                <input type="hidden" name="filterField" value="" />
+                <input type="hidden" name="filterMode" value="" />
+                <input type="hidden" name="filterValue" value="" />
+                <div class="filterField pull-left"  ></div>
+                <div class="pull-left filterMode">></div>
+                <div class="pull-left filterValue">10</div>
+                <div class="pull-right"><a href="javascript:void(0)" id="RemoveFilter" class="pull-right btn btn-default" style="padding:3px 5px">x</a></div>
+            </div>
+        </div>
+
+         <div id="ExtraFilters"></div>
+    </div>
+</div>
+<hr />
+<style>
+    .filter-value-text {
+         width: 148px;
+    }
+
+     .filterField {
+         width:100px;
+         font-size:0.8em;
+         margin-right: -6px;
+     } 
+    .filterMode {
+        width:60px;
+        text-align: center;
+    }
+    #ExtraFilters { 
+        line-height: 30px;
+    }
+</style>
+<script>
+    $(document).ready(function() { 
+
+        $("#AddFilter").bind("click", function () {
+            var nFilters = $("#ExtrafiltersTemplate>div.filter-group").clone(true, true);
+
+            var filterFieldVal = $("#FirstFilter").find("select[name='filterField-val'] option:selected");
+            var filterModeVal = $("#FirstFilter").find("select[name='filterMode-val']");
+            var filterValueVal = $("#FirstFilter").find("input[name='filterValue-val']");
+            
+            var filterField = $(nFilters).find("input[name*='filterField']");
+            var filterMode = $(nFilters).find("input[name*='filterMode']");
+            var filterValue = $(nFilters).find("input[name*='filterValue']");
+
+            $(filterField).val($(filterFieldVal).attr("value"));
+            $(filterMode).val($(filterModeVal).val());
+            $(filterValue).val($(filterValueVal).val());
+
+            $(nFilters).find(".filterField").html($(filterFieldVal).text());
+            $(nFilters).find(".filterMode").html($(filterModeVal).val());
+            $(nFilters).find(".filterValue").html($(filterValueVal).val());
+
+            $(nFilters).prependTo("#ExtraFilters");
+
+
+        });
+
+        $("#RemoveFilter").bind("click", function () {
+            $(this).closest(".filter-group").remove(); 
+        });
+
+    });
+</script>
+
+@Html.Partial("SearchFormColumns", columnSelectList)
+
+<br /><br /><br /><br /><br />

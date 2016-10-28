@@ -1,0 +1,9 @@
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_SCHEMA = 'sc3' AND  TABLE_NAME = 'Team'))
+BEGIN      
+ 
+	CREATE TABLE [sc3].[Team](
+		[ID] [bigint] IDENTITY(1,1) NOT NULL, 
+		[Name] [nvarchar](255) NOT NULL
+	)  
+	
+END

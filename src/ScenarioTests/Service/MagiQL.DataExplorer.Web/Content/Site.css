@@ -1,0 +1,171 @@
+﻿body {
+    zoom: 80%;
+}
+
+.navbar-inverse {
+    background: #1F2842;
+}
+
+.sidebar {
+    width: 300px !important;
+}
+.col-md-offset-2 {
+    margin-left: 285px;
+}
+
+.topbar {
+    padding: 10px 25px 5px 15px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #eee;
+}
+.topbar .form-control {
+    width: auto;
+    margin-right: 20px;
+}
+.topbar .form-control-sm {
+    width: 50px;
+}
+.topbar label {
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 30px;
+    width:70px
+}
+
+label {
+    font-weight: normal;
+    margin-bottom: 1px;
+}
+ 
+.form-group {
+    margin-bottom: 5px;
+}
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.panel-formset {
+    background: #E6E6E6;
+    padding: 5px;
+    border-radius: 7px;
+}
+
+.filter-group .small-text {
+    width:80px;
+}
+ 
+#errorIframe {
+    width: 100%;
+    height: 900px;
+}
+
+
+.main {
+    padding: 0 !important;
+}
+
+.results { 
+}
+
+#reportStatus .panel {
+    background: #f5f5f5;
+}
+
+#reportStatus .progress {
+    background: #ffffff;
+    margin-bottom: 5px;
+}
+#reportStatus .info {
+    padding: 5px;
+}
+#reportStatus .download {
+    background: #428BCA;
+    text-align: center;
+    padding: 2px;
+}
+#reportStatus .download a {
+    color: #fff !important;
+    margin: 2px auto;
+}
+
+
+.results .topbar {
+    background-color: #E6E6E6
+}
+
+.results .table {
+    margin-left: 10px; 
+}
+
+.results .table th,
+.results .table td{
+    border-right: 1px solid #fff;
+}
+
+
+.results thead {
+    background: #1F2842;
+    color: #fff;
+}
+
+
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 100% !important;
+    }
+}
+
+.loader {
+    margin: 200px auto;
+    width: 170px;
+    height: 170px;
+    background-image: url(../Content/loading.gif);
+}
+
+
+.ui-front {
+    z-index: 2000 !important;
+}
+
+.custom-combobox {
+    display: block;
+    overflow: hidden;
+}
+
+.custom-combobox input { 
+    display: block;
+    width: 95%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555555;
+    vertical-align: middle;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    float: left;
+} 
+
+
+.custom-combobox a {
+    float: left;
+    width: 25px;
+    height: 35px;    
+    line-height: 35px;
+    margin-left:-25px;
+    background: none;
+    border: none;
+}
+.custom-combobox a:before{content: "▾"}
+
+
+.ui-timepicker-div {
+    display: none;
+}

@@ -1,0 +1,54 @@
+﻿@using Newtonsoft.Json
+@model MagiQL.Framework.Model.Response.GenerateReportResponse
+ 
+@{
+    Layout = null;
+}
+
+@if (Model != null )
+{
+
+    var settings = new JsonSerializerSettings
+    {
+        NullValueHandling = NullValueHandling.Ignore
+    };
+
+
+
+    <div class="topbar clearfix">
+        Report started in <strong>@Model.Timing.ElapsedMilliseconds ms</strong>
+        <div class="pull-right">
+            <a href="#" onclick="$('#debug-request').toggle(); $('#debug-json').hide(); $('#debug-sql').hide(); $('#debug-timing').hide();">Show Request</a> 
+        </div>
+    </div>
+    <div class="debug-info">
+        <div id="debug-request" style="display:none;">
+            <pre>@JsonConvert.SerializeObject(Model.Request, Formatting.Indented, settings)</pre>
+        </div>
+    </div>
+
+
+    if (Model.Error != null)
+    {
+        @Html.Partial("ErrorInfo", Model.Error)
+    }
+
+
+    if (Model.Data != null)
+    { 
+        
+        @Html.Partial("~/Views/ExportStatus/_Status.cshtml", Model.Data)
+
+        <script>
+            function reload() {
+                setTimeout(function() {
+                    $("#reportStatus").load('/facebook/exportstatus/?id=' + @Model.Data.Id + " #reportStatus .inner");
+                    reload();
+                }, 3 * 1000);
+            }
+
+            reload();
+        </script>
+    }
+} 
+ 

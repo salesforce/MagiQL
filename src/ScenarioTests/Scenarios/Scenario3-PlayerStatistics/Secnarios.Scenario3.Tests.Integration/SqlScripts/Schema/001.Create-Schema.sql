@@ -1,0 +1,4 @@
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'sc3')
+BEGIN
+EXEC('CREATE SCHEMA sc3')
+END

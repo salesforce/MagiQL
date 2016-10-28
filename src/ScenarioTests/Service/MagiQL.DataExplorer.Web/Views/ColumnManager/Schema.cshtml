@@ -1,0 +1,128 @@
+﻿@using Newtonsoft.Json
+@model MagiQL.Framework.Model.Response.TableInfo
+
+<script src="~/Content/Scripts/nomnoml/zepto.min.js"></script>
+<script src="~/Content/Scripts/nomnoml/lodash.min.js"></script>
+<script src="~/Content/Scripts/nomnoml/dagre.min.js"></script>
+<script src="~/Content/Scripts/nomnoml/nomnoml.js"></script>
+
+
+    @{
+        string errorMessage = null;
+        try
+        {
+
+
+            var settings = @"#zoom: 1
+#spacing: 60
+#padding: 5
+#arrowSize: 0.5
+#bendSize: 0.3
+#direction: down | right
+#gutter: 5
+#edgeMargin: 0
+#edges: hard | rounded
+#fill: #f3f3f3; #A9B5D7
+#fillArrows: false
+#font: Calibri
+#fontSize: 12
+#leading: 1.25
+#lineWidth: 2
+#stroke: #33322E
+";
+
+            var allTables = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(Model.Tables));
+            var allRelations = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(Model.Relationships));
+            var tables = "";
+            int i = 0;
+
+            foreach (var table in allTables)
+            {
+                var tbl = "[" + table.knownTableName;
+                if (table.dbTableName != null)
+                {
+                    var dbParts = table.dbTableName.ToString().Split('.');
+                    var schema = dbParts.Length > 1 ? dbParts[dbParts.Length - 2] + "." : "";
+                    tbl += "|" + schema + dbParts[dbParts.Length - 1];
+                }
+                if (table.primaryKey != null)
+                {
+                    tbl += "|" + table.primaryKey;
+                }
+
+                var foreignKeys = new List<string>();
+                foreach (var rel in allRelations)
+                {
+                    if (rel.table1.knownTableName == table.knownTableName)
+                    {
+                        foreignKeys.Add(rel.table1Column.ToString());
+                    }
+                    if (rel.table2.knownTableName == table.knownTableName)
+                    {
+                        foreignKeys.Add(rel.table2Column.ToString());
+                    }
+                }
+                foreignKeys = foreignKeys.Distinct().Where(x => x != table.primaryKey.ToString()).ToList();
+                if (foreignKeys.Any())
+                {
+                    tbl += "|" + string.Join(";", foreignKeys);
+                }
+
+                if (i == 0)
+                {
+                    tbl += "|[RootTable]";
+                }
+
+
+                tbl += "]\n";
+                tables += tbl;
+                i++;
+            }
+
+
+
+            var relations = "";
+
+            foreach (var relation in allRelations)
+            {
+                var line = "-";
+                if (relation.isDirect == "false")
+                {
+                    line += "-";
+                }
+                if (relation.relationshipType == 1)
+                {
+                    line += "o";
+                }
+                if (relation.relationshipType == 2)
+                {
+                    line = "o" + line;
+                }
+
+                relations += "[" + relation.table1.knownTableName + "]" + line + "[" + relation.table2.knownTableName + "]\n";
+            }
+            <canvas id="target-canvas"></canvas>
+            <script>
+            var canvas = document.getElementById('target-canvas');
+            var source = `@Html.Raw(settings)@Html.Raw(tables)@Html.Raw(relations)`;
+            nomnoml.draw(canvas, source);
+            </script>
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+
+}
+
+
+ 
+@if (errorMessage != null)
+{
+    <div class="panel panel-danger">
+        <div class="panel-heading">
+            Could not draw schema
+        </div>
+        <div class="panel-body"><pre>@errorMessage</pre></div>
+    </div>
+}

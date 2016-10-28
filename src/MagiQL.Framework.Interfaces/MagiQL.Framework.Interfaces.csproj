@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{970D11DE-742B-4C53-9DF5-CEA98FA915F8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MagiQL.Framework.Interfaces</RootNamespace>
+    <AssemblyName>MagiQL.Framework.Interfaces</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SqlModeller, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SqlModeller.1.0.0.7\lib\net45\SqlModeller.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\MagiQLAssemblyInfo.cs">
+      <Link>Properties\MagiQLAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ILoopTimer.cs" />
+    <Compile Include="IReportColumnMappingValidator.cs" />
+    <Compile Include="ISqlQueryExecutor.cs" />
+    <Compile Include="Logging\ILoggingProvider.cs" />
+    <Compile Include="Logging\ILogInfo.cs" />
+    <Compile Include="Logging\NoLoggingProvider.cs" />
+    <Compile Include="Renderers\IRenderFilterFactory.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Services\IAsyncReportGeneratorService.cs" />
+    <Compile Include="IColumnProvider.cs" />
+    <Compile Include="Services\IColumnProviderCacheService.cs" />
+    <Compile Include="Renderers\IRenderFilter.cs" />
+    <Compile Include="Services\IRenderFilterService.cs" />
+    <Compile Include="Services\IReportColumnMappingCreationService.cs" />
+    <Compile Include="Services\IReportColumnMappingQueryService.cs" />
+    <Compile Include="Services\IReportColumnMappingUpdaterService.cs" />
+    <Compile Include="IReportsDataSource.cs" />
+    <Compile Include="IReportsDataSourceFactory.cs" />
+    <Compile Include="Services\IReportStatusCreationService.cs" />
+    <Compile Include="Services\IReportStatusQueryService.cs" />
+    <Compile Include="Services\IReportStatusUpdaterService.cs" />
+    <Compile Include="ISearchRequestValidator.cs" />
+    <Compile Include="Services\ISearchService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IReportColumnMappingRepository.cs" />
+    <Compile Include="Repository\IReportStatusRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MagiQL.Framework.Model\MagiQL.Framework.Model.csproj">
+      <Project>{218fc82b-3d1b-4ec3-ac20-4e3c8e072707}</Project>
+      <Name>MagiQL.Framework.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

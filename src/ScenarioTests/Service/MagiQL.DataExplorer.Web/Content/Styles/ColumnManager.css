@@ -1,0 +1,95 @@
+﻿#content {
+    padding: 5px;
+}
+
+#nav {
+    padding: 2px;
+    background-color: #494e65;
+    color: #fff;
+    overflow: hidden;
+}
+
+#nav a {
+    color: #ffffff;
+    text-decoration: none;
+}
+#nav .title {
+    float: left;
+}
+
+#nav .add-link {
+    float: right;
+    padding: 15px;
+}
+
+
+h1 {
+    font-weight: normal;
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+table {
+    font-size: 1em;
+}
+ 
+ 
+
+td, th {
+    padding: 3px 4px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background: #eee;
+}
+
+
+div.form {
+    padding: 5px;
+    overflow: hidden;
+}
+
+div.form-column {
+    float: left;
+    width: 600px;
+    overflow: hidden;
+}
+
+div.form-section {
+    border: 1px solid #494e65;
+    border-radius: 4px;
+    padding: 10px 10px 30px 10px;
+    margin:10px;
+}
+
+div.form-footer {
+    padding: 5px 200px;
+    border-radius: 4px;
+    background: aliceblue;
+    margin:10px;
+    overflow: hidden;
+}
+
+div.form-footer .form-cancel {
+    float: left;
+}
+
+div.form-footer .form-submit {
+    float: right;
+}
+
+div.editor-label{ float: left;width: 200px;padding-bottom: 5px;}
+div.editor-field{ margin-left: 200px;padding-bottom: 5px;}
+div.editor-field input{ width: 100%;}
+div.form textarea{ width: 100%;height: 400px;}
+
+
+.error-message {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    background: red;
+    color: white;
+    white-space: pre-line
+}

@@ -1,0 +1,22 @@
+type file
+id MagiQL.Service.Client
+authors Jon Menzies Smith
+description
+    MagiQL :: API Client
+files 
+    ../../build/MagiQL.Service.Client/ ==>
+    !../../build/**/*.xml
+frameworkAssemblies
+    System.Configuration
+    System.Data
+    System.Net.Http
+        System.Net.Http.Formatting
+projectUrl
+    https://magiql.github.io
+licenseUrl
+    https://magiql.github.io/
+copyright
+    Copyright (c) 2016, salesforce.com, inc. All rights reserved.
+tags
+    MagiQL, Api, Client
+include-pdbs false

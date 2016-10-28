@@ -1,0 +1,123 @@
+﻿@model MagiQL.Framework.Model.Response.SearchResponse
+@{
+    ViewBag.Title = "Data Explorer";
+}
+
+@section scripts
+{
+
+    <link rel="stylesheet" href="~/Content/Styles/smoothness-jquery-ui.css">
+    <script src="~/Content/Scripts/jq/jquery-1.10.2.js"></script>
+    <script src="~/Content/Scripts/jq/jquery-ui-1.11.3.js"></script>
+    <script src="~/Content/Scripts/jqtimepicker/timepicker.js"></script>
+    <script src="~/Content/Scripts/Search.js"></script>
+
+    <link href="~/Content/Scripts/jqtree/jqtree.css" rel="stylesheet" />
+    <script src="~/Content/Scripts/jqtree/tree.jquery.js"></script>
+    <script>
+
+        $(document).ready(function() {
+            // this is the id of the form
+            var xhr = null;
+
+            var doSubmit = function() {
+
+
+            };
+
+            $('form').bind('submit', function(e) {
+                e.preventDefault();
+
+                if (xhr != null && xhr.readyState != 4) {
+                    xhr.abort();
+                }
+
+                $(".results").html("<div class='topbar'>Loading</div><div class='loader'></div>");
+
+                var url = $("#search-form").attr("action");
+
+                xhr = $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $("#search-form").serialize(),
+                    success: function(data) {
+                        $(".results").html(data);
+                    },
+                    error: function(data) {
+
+                        $(".results").html("<iframe id='errorIframe'></iframe>");
+                        $('#errorIframe').contents().find('html').html(data.responseText);
+                    }
+                });
+            });
+
+
+
+        });
+
+        var submitForm = function () { 
+            $("#hdnExport").val("false");
+        };
+
+        var submitExport = function () { 
+            $("#hdnExport").val("true");
+        }
+    </script>
+     
+
+
+}
+
+<div class="container-fluid">
+    <div class="row"> 
+        @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @id = "search-form" }))
+        {
+            <div class="col-sm-3 col-md-2 sidebar enscroll">
+                @Html.Action("SearchForm", new { platform = ViewBag == null ? null : ViewBag.Platform ?? "Facebook", orgId = ViewBag == null ? null : ViewBag.OrganizationId ?? 1 })
+            </div>
+
+
+
+            <div class="topbar clearfix col-md-offset-2">
+                <div class="form-group pull-left">
+
+                    <label class="pull-left" style="width:250px;">
+                        @Html.CheckBox("excludeRecordsWithNoStats", false)
+                        Exclude records without stats
+                    </label>
+                    <label for="" class="pull-left">Page Size</label> 
+                    <input type="hidden" name="debug" value="true"/>
+                    @Html.TextBox("pageSize", 25, new { @class = "form-control  form-control-sm pull-left" })
+                    <label for="" class="pull-left">Page Index</label>
+                    @Html.TextBox("pageIndex", 0, new { @class = "form-control  form-control-sm pull-left" })
+
+                    <button  id="btnSelect" class="btn btn-primary pull-left" style="margin-left: 50px" name="search" onclick="submitForm()">Select</button>
+
+                </div>
+
+                <input type="hidden" name="export" value="false" id="hdnExport" />
+                <div class="form-group pull-right">
+                    <button  id="btnExport" class="btn btn-secondar pull-left" onclick="submitExport()">Export</button>
+                </div>
+
+
+
+            </div>
+        }
+
+    </div>
+
+
+    <div class="col-md-offset-2 main">
+
+
+
+
+
+
+        <div class="results">
+             
+
+        </div>
+    </div>
+</div>

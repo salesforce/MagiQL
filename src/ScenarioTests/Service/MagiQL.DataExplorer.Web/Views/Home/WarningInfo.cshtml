@@ -1,0 +1,17 @@
+﻿@model IEnumerable<string>
+ 
+ 
+
+<div id="error" class="panel panel-warning">
+    <div class="panel-heading">Warning</div>
+    <div class="panel-body">
+        <div id="warning-messages"> 
+            <ul>
+                @foreach (var warning in Model)
+                {
+                    <li>@warning</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

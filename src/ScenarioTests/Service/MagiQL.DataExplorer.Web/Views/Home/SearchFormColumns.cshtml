@@ -1,0 +1,180 @@
+﻿@model System.Collections.Generic.List<System.Web.Mvc.SelectListItem>
+
+@{
+    bool ListOpen = false;
+}
+
+
+<style>
+    ul.jqtree-tree .jqtree-toggler:hover,
+    ul.jqtree-tree .jqtree-toggler,
+    .jqtree-tree .jqtree-title {
+        color: #fff;
+    }
+
+    ul.jqtree-tree li.jqtree-selected > .jqtree-element, ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
+        background: -webkit-gradient(linear, left top, right bottom, from(#f5f5f5), to(#ccc));
+        text-shadow: none;
+        font-weight: bold;
+    } 
+     
+    
+
+</style>
+
+
+<h4>Columns</h4>
+<div id="column-menu">
+    <input type="text" id="column-search" placeholder="Filter" autocomplete="off" style="width:140px;"/>
+    | <a href="javascript:void(0)" id="columns-clear">Clear</a>  | <a href="javascript:void(0)" id="columns-selectall">Select All</a>  | 
+</div>
+
+<div id="hidden-columns"></div>
+
+<div id="column-tree"></div>
+
+
+<script language="javascript">
+    
+    $(document).ready(function() {
+         
+
+        var data = [
+            @foreach (var item in Model)
+            {
+                if (item.Value == null)
+                {
+                    if (ListOpen)
+                    {
+                        @Html.Raw("]},")
+                    }
+                    @Html.Raw("{ label: '" + item.Text.Trim('_') + "', children: [")
+                    ListOpen = true;
+                }
+                else
+                {
+                    @Html.Raw("{ label: '" + item.Text + "' , id : '" + item.Value + "'},")
+                }
+            }
+            @if (ListOpen)
+                {
+                    @Html.Raw("]},")
+                }
+        ];
+
+
+        var $tree = $('#column-tree');
+        $tree.tree({
+            dragAndDrop: true,
+            autoOpen: true,
+            data: data,
+            onCanMove: function(node) {
+                if (! node.parent.parent) {
+                    // Example: Cannot move root node
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }, 
+            onCanMoveTo: function (moved_node, target_node, position) { 
+                if (position == "inside") {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+        });
+          
+        $tree.bind(
+            'tree.click',
+            function (e) {
+                // Disable single selection
+                e.preventDefault();
+
+                var selected_node = e.node;
+
+                if (selected_node.id == undefined) {
+                    console.log('The multiple selection functions require that nodes have an id');
+                }
+
+                if (selected_node.getLevel() > 1) {
+                    if ($tree.tree('isNodeSelected', selected_node)) {
+                        $tree.tree('removeFromSelection', selected_node);
+                    }
+                    else {
+                        $tree.tree('addToSelection', selected_node);
+                    }
+                }
+
+               
+            }
+        );
+
+
+
+        $('form').bind('submit', function(e) {
+            selectColumns();
+        });
+
+        var selectColumns = function() {
+            $('#hidden-columns').empty();
+            $tree.tree('getTree').iterate(function (node) {
+                if ($('#column-tree').tree('isNodeSelected', node)) {
+                    $('#hidden-columns').append("<input type='hidden' name='column' value='" + node.id + "' />");
+                }
+                return true;
+            });
+        }
+
+
+        $('#columns-clear').bind('click', function (e) {
+            $tree.tree('getTree').iterate(function(node) {
+                $('#column-tree').tree('selectNode', null);
+                return true;
+            });
+        });
+
+
+
+        $('#columns-selectall').bind('click', function (e) {
+            $tree.tree('getTree').iterate(function (node) {
+              
+                if (!$tree.tree('isNodeSelected', node) && node.getLevel() > 1) {
+                    // Select nodes
+                    $tree.tree('addToSelection', node);
+                };
+
+                return true;
+            });
+        });
+
+
+
+        var thread = null;
+        $('#column-search').keyup(function () {
+            clearTimeout(thread); 
+            thread = setTimeout(function () {
+                var searchVal = $('#column-search').val().toLowerCase();
+                $tree.tree('getTree').iterate(
+                    function (node) {
+                        if (node.name.toLowerCase().indexOf(searchVal) > -1 || searchVal.length == 0) {
+                            $(node.element).show(); 
+                        } else if (node.parent.parent) { // dont hide root nodes
+                            $(node.element).hide();
+                        }
+
+                        return true;  // continue iterating
+                    }
+                );
+
+            }, 100);
+        }); 
+
+
+    });
+
+</script>
+
+ 

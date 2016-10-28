@@ -1,0 +1,98 @@
+﻿@using Newtonsoft.Json
+@model MagiQL.Framework.Model.Response.GetColumnMappingsResponse
+
+@{
+    ViewBag.Title = "Column Manager";
+
+} 
+
+@section scripts   
+{
+    
+    <script src="~/Content/Scripts/tablesorter/tablesorter.min.js"></script>
+    
+
+    <script>
+        $('#myTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+
+        $(function () {
+            $("table").tablesorter();
+        });
+    </script>
+}
+
+<h2>@Html.ActionLink("Column Manager", "Index")</h2>
+<span class="pull-right">@Html.ActionLink("+ Add New Column", "Create", new { orgId = ViewBag.OrganizationId })</span>
+
+
+
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul id="myTabs" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#tab-schema" aria-controls="schema" role="tab" data-toggle="tab">Schema</a></li>
+
+        @{
+            int i = 1;
+            var grouped = Model.Data.GroupBy(x => x.MainCategory).OrderBy(x => x.Key).ToList();
+        }
+        @foreach (var mainCategoryGroup in grouped)
+        {
+            <li role="presentation"><a href="#tab-@(mainCategoryGroup.Key.Replace(" ","_"))" aria-controls="@(mainCategoryGroup.Key.Replace(" ","_"))" role="tab" data-toggle="tab">@mainCategoryGroup.Key (@mainCategoryGroup.Count())</a></li>
+            i++;
+        }
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="tab-schema"><br />@Html.Action("Schema")</div>
+
+        @{ i = 1;}
+        @foreach (var mainCategoryGroup in grouped)
+        {
+            <div role="tabpanel" class="tab-pane" id="tab-@(mainCategoryGroup.Key.Replace(" ","_"))">
+
+                <div class="table-responsive" >
+                    <table class="table table-striped" style="width:100%" > 
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>DisplayName</th>
+                                <th>UniqueName</th>
+                                <th>Selectable</th>
+                                <th>IsCalculated</th>
+                                <th style="width:25%">FieldName</th>
+                                <th>FieldAggregationMethod</th>
+                                <th>MetaData</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var column in mainCategoryGroup.OrderBy(x => x.DisplayName))
+                            {
+                                <tr>
+                                    <td>@Html.ActionLink(@column.Id.ToString(), "Edit", new { platform = ViewBag.Platform, Id = column.Id, orgId = ViewBag.OrganizationId })</td>
+                                    <td>@column.DisplayName</td>
+                                    <td>@column.UniqueName</td>
+                                    <td>@column.Selectable</td>
+                                    <td>@column.IsCalculated</td>
+                                    <td style="width:25%">@column.FieldName</td>
+                                    <td>@column.FieldAggregationMethod</td>
+                                    <td>@JsonConvert.SerializeObject(column.MetaData, formatting: Formatting.Indented).TrimStart('[').TrimEnd(']')</td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+
+

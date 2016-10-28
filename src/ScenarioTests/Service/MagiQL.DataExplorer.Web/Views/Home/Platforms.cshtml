@@ -1,0 +1,15 @@
+﻿@model System.Collections.Generic.List<MagiQL.Framework.Model.Columns.PlatformInfo>
+@{
+    Layout = null;
+}
+@if (Model == null || !Model.Any())
+{
+    <text>Error : No data providers defined.</text> 
+}
+else
+{
+    foreach (var platformInfo in Model)
+    {
+        <li>@Html.ActionLink(platformInfo.Name, "Index", "Home", new { platform = platformInfo.Id }, null)</li>
+    }
+}

@@ -1,0 +1,190 @@
+﻿body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: Verdana;
+    font-size: 11px;
+}
+
+#left-bar {
+    float: left;
+    width: 300px;
+    background-color: #494e65;
+    padding: 5px;
+    color: #fff;
+    min-height:100%
+}
+
+#column-selector {
+    overflow: hidden;
+    width: 99%;
+}
+
+#column-selector-inner {
+    width: 400px;
+}
+
+
+h1{ margin: 5px 0;padding: 0;font-weight: bold;font-size: 1.1em;}
+
+.column-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    list-style-position: inside;
+
+}
+
+li.column-list-header {
+    padding: 5px;
+    font-weight: bold;
+}
+
+
+
+#results {
+    margin-left: 301px;
+}
+
+#results-scroll {
+    overflow: scroll;
+}
+
+#results-frame { 
+    width: 98%;
+    height: 99%;
+    border: 0;
+}
+
+input.small-text {
+    width: 25px;
+}
+
+.custom-combobox .ui-state-default {
+    background: #ffffff;
+}
+
+.ui-widget {
+    font-size: 1em !important;
+}
+
+.custom-combobox input {
+    width: 245px;
+}
+
+.custom-combobox a {
+    height: 15px;
+}
+
+    .custom-combobox a.ui-button {
+        vertical-align: top;
+    }
+
+
+    .filter .custom-combobox input {
+        width: 120px;
+    }
+
+input.small-text {
+    width: 40px;
+} 
+
+#reportStatus {
+    margin: 20px auto;
+    width: 60%;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #666;
+    background: #eee;
+}
+
+#reportStatus .info {
+    margin: 5px;
+}
+
+.progressbar {
+    border-radius: 3px;
+    width: 98%;
+    height: 20px;
+    border: 1px solid #666;
+    margin: 5px;
+    background: #ffffff;
+}
+
+.progressbar-inner {
+    height: 20px;
+    background: #494e65;
+}
+
+.download-link a {
+    display: block;
+    border-radius: 3px;
+    width: 98%;
+    height: 15px;
+    background: #494e65;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    color: #ffffff !important;
+}
+
+.search-summary {
+    padding: 5px;
+    background: #eee;
+    border-bottom: 1px solid #494e65;
+    border-top: 1px solid #494e65;
+}
+
+
+#error, #warnings {
+    padding: 5px;
+}
+
+#error-message {
+    padding: 5px;
+    border: 1px solid #b92020;
+    background: #eac1c1;
+    margin-bottom: 5px;
+}
+
+#error-trace {
+    padding: 5px;
+    border: 1px solid #ddd591;
+    background: #f5f2cb;
+}
+
+#warning-messages {
+    padding: 5px;
+    border: 1px solid #6d2f05;
+    background: #F5F5C4;
+    margin-bottom: 5px;
+}
+
+
+        .debug-info {
+            background: #494e65;
+            padding: 5px;
+            color: #fff;
+            text-align: right;
+        }
+            .debug-info a {
+                color: #fff;
+            }
+
+        #debug-sql,
+        #debug-json,
+        #debug-request
+        {
+            background: #f5f5f5;
+            text-align: left;
+            color: #333;
+            padding: 5px;
+        }
+        
+
+        fieldset{ background: #676E8F;border: 0;margin: 0;}
+        fieldset h3 {
+            padding: 0;
+            font-size: 1em;
+            margin: 0 0 5px 0;
+        }

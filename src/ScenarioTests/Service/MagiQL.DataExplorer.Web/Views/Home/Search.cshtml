@@ -1,0 +1,29 @@
+﻿@model MagiQL.Framework.Model.Response.SearchResponse
+
+@{
+    ViewBag.Title = "Search";
+    Layout = null;
+}
+
+
+
+@if (Model != null)
+{
+    @Html.Partial("DebugInfo", Model)
+
+    if(Model.Error != null || (Model.DebugInfo != null && Model.DebugInfo.WarningMessages != null && Model.DebugInfo.WarningMessages.Any()))
+     {
+         <div style="padding: 20px 20px 0 20px;">
+             @if (Model.Error != null)
+             {
+                 @Html.Partial("ErrorInfo", Model.Error)
+             }
+
+             @if (Model.DebugInfo != null && Model.DebugInfo.WarningMessages != null && Model.DebugInfo.WarningMessages.Any())
+             {
+                 @Html.Partial("WarningInfo", Model.DebugInfo.WarningMessages)
+             }
+         </div>
+     }
+}  
+@Html.Partial("SearchResults", Model)

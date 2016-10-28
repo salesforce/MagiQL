@@ -1,0 +1,40 @@
+﻿@model MagiQL.Framework.Model.Response.SearchResponse
+
+
+@if (Model != null && Model.Data != null)
+{
+    if (Model.Data.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped" style="width:auto">
+                <thead>
+                    <tr>
+                        @foreach (var val in Model.Data.First().Values)
+                        {
+                            <th>
+                                <span href="#" data-toggle="tooltip" data-placement="bottom" title="ColumnID = @val.ColumnId">@val.Name</span>
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var data in Model.Data)
+                    {
+                        <tr>
+                            @foreach (var val in data.Values)
+                            {
+                                <td class="@val.ColumnId">@val.Value</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    }
+}
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>

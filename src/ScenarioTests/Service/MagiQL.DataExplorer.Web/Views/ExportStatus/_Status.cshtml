@@ -1,0 +1,47 @@
+﻿@using System.Web.UI.WebControls
+@model MagiQL.Framework.Model.Response.ReportStatus
+
+<div id="reportStatus">
+    <div class="panel inner" style="width:750px; margin:200px auto;">
+        <div class="panel-body">
+            <div class="info"><strong>Export</strong></div>
+            <div class="info">ID : @Model.Id</div>
+            <div class="info">Status : @Model.StatusMessage</div>
+            <div class="info">Created : @Model.DateCreated</div>
+            <div class="info">Updated : @Model.DateUpdated</div>
+            <div class="info">Duration : @((int)Model.Duration.Minutes)m @((int)Model.Duration.Seconds)s</div>
+            <div class="info">Progress : @Model.ProgressPercentage%</div>
+
+            @if (Model.DateCompleted == null)
+            {
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="@Model.ProgressPercentage"
+                         aria-valuemin="0" aria-valuemax="100" style="width:@Model.ProgressPercentage%">
+                        <span class="sr-only">@Model.ProgressPercentage% Complete</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="download progress" >
+                    <a href="/facebook/ExportStatus/Download?id=@Model.Id">Download</a>
+                </div>
+
+            }
+
+            @if (Model.ErrorMessage != null)
+            {
+                <div id="error">
+                    <div id="error-message">
+                        @Model.ErrorMessage
+                    </div>
+
+                    <div id="error-trace">
+                        <pre>@Model.StackTrace</pre>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div> 
+ 

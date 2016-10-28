@@ -1,0 +1,33 @@
+﻿@model System.Collections.Generic.List<MagiQL.Framework.Model.Columns.ReportColumnMapping>
+@{
+    Layout = null;
+}
+@if (Model != null && Model.Any())
+{
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Nested Columns</h4></div>
+        <div class="panel-body">
+             
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>UniqueName</th>
+                        <th>KnownTable</th>
+                        <th>FieldName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.OrderBy(x=>x.UniqueName))
+                    {
+                        <tr>
+                            <td>@c.UniqueName</td>
+                            <td>@c.KnownTable</td>
+                            <td>@c.FieldName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

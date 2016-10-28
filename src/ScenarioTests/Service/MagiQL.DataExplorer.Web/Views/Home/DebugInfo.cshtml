@@ -1,0 +1,88 @@
+﻿@using Newtonsoft.Json
+@model MagiQL.Framework.Model.Response.SearchResponse
+
+@{
+    var settings = new JsonSerializerSettings
+    {
+        NullValueHandling = NullValueHandling.Ignore
+    };
+
+    var hasError = (Model == null || Model.Summary == null || Model.Timing == null);
+}
+
+
+ 
+<div class="topbar clearfix @(hasError?"error":"")">
+    @if(!hasError){
+        <text>Search found <strong>@Model.Summary.TotalRows</strong> results in <strong>@Model.Timing.ElapsedMilliseconds ms</strong> (@Model.Request.SelectedColumns.Count columns) | <a href="#" onclick="$('#debug-timing').toggle(); $('#debug-json').hide(); $('#debug-request').hide(); $('#debug-sql').hide();">Show Timings</a></text>
+    }
+    <div class="pull-right">
+        <a href="#" onclick="$('#debug-request').toggle(); $('#debug-json').hide(); $('#debug-sql').hide(); $('#debug-timing').hide();">Show Request</a> |
+        <a href="#" onclick="$('#debug-json').toggle(); $('#debug-sql').hide(); $('#debug-request').hide(); $('#debug-timing').hide();">Show Response</a> |
+        <a href="#" onclick="$('#debug-sql').toggle(); $('#debug-json').hide(); $('#debug-request').hide(); $('#debug-timing').hide();">Show Sql</a>
+
+
+    </div>
+</div>
+
+<div class="debug-info">
+
+@if(!hasError)
+{
+    <div id="debug-timing" style="display: none;">
+        <div style="background: #f5f5f5; padding: 10px;">
+            <ul>
+                <li>
+                    Round Trip [@ViewBag.SearchElapsedMilliseconds ms]
+                    <ul>
+                        <li>
+                            Client
+                            <ul>
+                                @foreach (var t in Model.Timing.AdditionalTiming)
+                                {
+                                    <li>@t.Key [@t.Value ms] </li>
+                                }
+                            </ul>
+                        </li>
+                        <li>
+                            Service
+                            <ul>
+                                <li>
+                                    Build [@Model.Summary.BuildQueryElapsedMilliseconds ms]
+                                    <ul>
+                                        <li>Map [@Model.Summary.MapRequestElapsedMilliseconds ms]</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Compile [@Model.Summary.CompileQueryElapsedMilliseconds ms]
+                                </li>
+                                <li>
+                                    Query [@Model.Summary.QueryElapsedMilliseconds ms]
+                                </li>
+                                <li>
+                                    parse [@Model.Summary.ParseResultElapsedMilliseconds ms]
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
+    <div id="debug-sql" style="display:none;">
+        <pre>@(Model.DebugInfo == null ? "" : Model.DebugInfo.SqlQuery)</pre>
+    </div>
+
+    <div id="debug-json" style="display:none;">
+        <pre>@JsonConvert.SerializeObject(Model, Formatting.Indented, settings)</pre>
+    </div>
+
+    <div id="debug-request" style="display:none;">
+        <pre>@JsonConvert.SerializeObject(Model.Request, Formatting.Indented, settings)</pre>
+    </div>
+</div>
+
+
+ 
+

@@ -1,0 +1,290 @@
+﻿@using Newtonsoft.Json
+@model MagiQL.Framework.Model.Columns.ReportColumnMapping
+
+@{
+    ViewBag.Title = "Edit Column";
+}
+
+<link rel="stylesheet" href="~/Content/Styles/ColumnManager.css">
+<link rel="stylesheet" href="~/Content/Styles/smoothness-jquery-ui.css">
+
+<script src="~/Content/Scripts/jq/jquery-1.10.2.js"></script>
+<script src="~/Content/Scripts/jq/jquery-ui-1.11.3.js"></script>
+<link rel="stylesheet" href="~/Content/Styles/smoothness-jquery-ui.css">
+<script src="~/Content/Scripts/tablesorter/tablesorter.min.js"></script>
+<style>
+    .form-group {
+        padding-bottom: 10px;
+    }
+
+    .textarea {
+        width: 100%;
+        height: 627px !important;
+    }
+</style>
+
+<div id="content">
+
+    <h2>@Html.ActionLink("Column Manager", "Index")</h2>
+
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        if (ViewBag.ErrorMessage != null)
+        {
+            <div class="error-message">@ViewBag.ErrorMessage</div>
+        }
+
+
+
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading"><h4>ID</h4></div>
+                    <div class="panel-body">
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="form-inline">
+                            <div class="form-group ">
+                                @Html.LabelFor(model => model.UniqueName) 
+                                @Html.TextBoxFor(model => model.UniqueName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.UniqueName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OrganizationId)
+                            @Html.TextBoxFor(model => model.OrganizationId, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.OrganizationId)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CreatedByUserId)
+                            @Html.TextBoxFor(model => model.CreatedByUserId, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CreatedByUserId)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsPrivate)
+                            @Html.CheckBoxFor(model => model.IsPrivate, new { @class = "" })
+                            @Html.ValidationMessageFor(model => model.IsPrivate)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading"><h4>Column Info</h4></div>
+                    <div class="panel-body">
+
+                        
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.KnownTable)
+                            @Html.TextBoxFor(model => model.KnownTable, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.KnownTable)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FieldName)
+                            @Html.TextBoxFor(model => model.FieldName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FieldName)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model._FieldAggregationMethodString, "Aggregation Method")
+                            @Html.TextBoxFor(model => model._FieldAggregationMethodString, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model._FieldAggregationMethodString)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model._DbTypeString, "DB Type")
+                            @Html.TextBoxFor(model => model._DbTypeString, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model._DbTypeString)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ActionSpecId)
+                            @Html.TextBoxFor(model => model.ActionSpecId, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ActionSpecId)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsStat)
+                            @Html.CheckBoxFor(model => model.IsStat, new { @class = "" })
+                            @Html.ValidationMessageFor(model => model.IsStat)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsCalculated)
+                            @Html.CheckBoxFor(model => model.IsCalculated, new { @class = "" })
+                            @Html.ValidationMessageFor(model => model.IsCalculated)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading"><h4>Options</h4></div>
+                    <div class="panel-body"> 
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CanGroupBy)
+                            @Html.CheckBoxFor(model => model.CanGroupBy, new { @class = "" })
+                            @Html.ValidationMessageFor(model => model.CanGroupBy)
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Selectable)
+                            @Html.CheckBoxFor(model => model.Selectable, new { @class = "" })
+                            @Html.ValidationMessageFor(model => model.Selectable)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading"><h4>Display</h4></div>
+                    <div class="panel-body">
+                        
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DisplayName)
+                            @Html.TextBoxFor(model => model.DisplayName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DisplayName)
+                        </div>
+
+                        @* <div class="form-group">*@
+                        @*     @Html.LabelFor(model => model.Description)*@
+                        @*     @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })*@
+                        @*     @Html.ValidationMessageFor(model => model.Description)*@
+                        @* </div>*@
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MainCategory)
+                            @Html.TextBoxFor(model => model.MainCategory, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MainCategory)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SubCategory)
+                            @Html.TextBoxFor(model => model.SubCategory, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.SubCategory)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-heading"><h4>MetaData</h4></div>
+                    <div class="panel-body"> 
+                        <textarea name="metadata" class="textarea form-control">@JsonConvert.SerializeObject(Model.MetaData, Formatting.Indented)</textarea>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>Functions</h4></div>
+                    <div class="panel-body">
+                        
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Function</th>
+                                    <th>Usage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>CEILING</strong></td>
+                                    <td><em>CEILING({0})</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>COUNT</strong></td>
+                                    <td><em>COUNT</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FLOOR</strong></td>
+                                    <td><em>COUNT</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>IFTHENELSE</strong></td>
+                                    <td><em>IFTHENELSE({0:boolean},{1},{2})</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ISNULL</strong></td>
+                                    <td><em>ISNULL({0:nullable},{1})</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>MAXOF</strong></td>
+                                    <td><em>MAXOF({0},{1})</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>MINOF</strong></td>
+                                    <td><em>MINOF({0},{1})</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>NULLIF</strong></td>
+                                    <td><em>NULLIF({0},{1})</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>TOBIGINT</strong></td>
+                                    <td><em>TOBIGINT({0})</em></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>TOBOOL</strong></td>
+                                    <td><em>TOBOOL({0:boolean})</em></td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
+                </div>
+
+                <div id="DependantColumns"></div>
+                <script>
+                    $("#DependantColumns").load("../DependantColumns/?id=@Model.Id");
+
+                    var delay = (function() {
+                        var timer = 0;
+                        return function(callback, ms) {
+                            clearTimeout(timer);
+                            timer = setTimeout(callback, ms);
+                        };
+                    })();
+
+                    $("#FieldName").keyup(function() {
+                        delay(function() {
+                            $("#DependantColumns").load("../DependantColumnsByFieldName/?id=@Model.Id&fieldname=" + encodeURIComponent($("#FieldName").val()));
+                        }, 500);
+                    });
+                </script>
+
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-info ">
+            <div class="panel-body form-footer">
+                <div class="form-cancel">
+                    @Html.ActionLink("Back to List", "Index", new { orgId = Model.OrganizationId }, new { @class = "btn btn-default" })
+                </div>
+                <div class="form-submit">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
