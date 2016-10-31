@@ -22,10 +22,7 @@
         <!--
             <PackageSource Include="https://www.nuget.org/api/v2/" />
             <PackageSource Include="https://my-nuget-source/nuget/" />
-        -->
-		<PackageSource Include="http://klondike.brighter.io/api/odata" />
-	    <PackageSource Include="https://api.nuget.org/v3/index.json" />
-		<PackageSource Include="http://package.brighter.io/nuget" />
+        --> 
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(OS)' == 'Windows_NT'">
