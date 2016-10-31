@@ -1,9 +1,5 @@
-source http://klondike.brighter.io/api/odata
 source D:\packages
 source https://api.nuget.org/v3/index.json
-source http://package.brighter.io/nuget
-
-
 
 group Build
 
