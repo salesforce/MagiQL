@@ -1,7 +1,4 @@
-NUGET
-  remote: http://klondike.brighter.io/api/odata
-  specs:
-    
+NUGET    
   remote: http://api.nuget.org/v3/index.json
   specs:
     
