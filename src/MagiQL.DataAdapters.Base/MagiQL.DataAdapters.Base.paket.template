@@ -1,0 +1,17 @@
+type file
+id MagiQL.DataAdapters.Base
+authors Jon Menzies Smith
+description
+    MagiQL :: DataAdapters Base
+files 
+    ../../build/MagiQL.DataAdapters.Base/ ==> lib/net461
+    !../../build/**/*.xml 
+projectUrl
+    https://magiql.github.io
+licenseUrl
+    https://github.com/salesforce/MagiQL/blob/master/LICENSE.txt
+copyright
+    Copyright (c) 2016, salesforce.com, inc. All rights reserved.
+tags
+    MagiQL
+include-pdbs false

@@ -1,0 +1,17 @@
+type file
+id MagiQL.Service.WebAPI.StructureMap
+authors Jon Menzies Smith
+description
+    MagiQL :: MagiQL Service WebAPI StructureMap
+files 
+    ../../build/MagiQL.Service.WebAPI.StructureMap/ ==> lib/net461
+    !../../build/**/*.xml
+projectUrl
+    https://magiql.github.io
+licenseUrl
+    https://github.com/salesforce/MagiQL/blob/master/LICENSE.txt
+copyright
+    Copyright (c) 2016, salesforce.com, inc. All rights reserved.
+tags
+    MagiQL
+include-pdbs false
