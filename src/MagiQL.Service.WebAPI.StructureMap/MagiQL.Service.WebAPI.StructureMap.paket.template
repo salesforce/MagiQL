@@ -19,6 +19,8 @@ dependencies
     MagiQL.Framework.Interfaces ~> CURRENTVERSION
     MagiQL.Framework.Renderers.SpreadsheetGenerator ~> CURRENTVERSION
     MagiQL.Service.Interfaces ~> CURRENTVERSION
+    MagiQL.DataAdapters.Base ~> CURRENTVERSION
+    MagiQL.Framework.Repositories ~> CURRENTVERSION
 projectUrl
     https://magiql.github.io
 licenseUrl
