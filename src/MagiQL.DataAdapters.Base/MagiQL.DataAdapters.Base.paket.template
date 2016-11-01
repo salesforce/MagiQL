@@ -4,7 +4,7 @@ authors Jon Menzies Smith
 description
     MagiQL :: DataAdapters Base
 files 
-    ../../build/MagiQL.DataAdapters.Base/ ==> lib/net461
+    ../../build/MagiQL.DataAdapters.Base/ ==> lib/net451
     !../../build/**/*.xml 
 projectUrl
     https://magiql.github.io

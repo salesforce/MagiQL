@@ -4,7 +4,7 @@ authors Jon Menzies Smith
 description
     MagiQL :: MagiQL.Services.Interfaces
 files 
-    ../../build/MagiQL.Service.Interfaces/ ==> lib/net461
+    ../../build/MagiQL.Service.Interfaces/ ==> lib/net451
     !../../build/**/*.xml
 projectUrl
     https://magiql.github.io

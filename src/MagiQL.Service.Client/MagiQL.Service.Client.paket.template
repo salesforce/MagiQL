@@ -4,7 +4,7 @@ authors Jon Menzies Smith
 description
     MagiQL :: API Client
 files 
-    ../../build/MagiQL.Service.Client/ ==> lib/net461
+    ../../build/MagiQL.Service.Client/ ==> lib/net451
     !../../build/**/*.xml
 frameworkAssemblies
     System.Configuration

@@ -4,7 +4,7 @@ authors Jon Menzies Smith
 description
     MagiQL :: Framework
 files 
-    ../../build/MagiQL.Framework/ ==> lib/net461
+    ../../build/MagiQL.Framework/ ==> lib/net451
     !../../build/**/*.xml
 projectUrl
     https://magiql.github.io

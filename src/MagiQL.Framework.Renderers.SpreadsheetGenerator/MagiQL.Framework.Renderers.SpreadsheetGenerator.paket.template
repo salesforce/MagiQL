@@ -4,7 +4,7 @@ authors Jon Menzies Smith
 description
     MagiQL :: MagiQL.Framework.Renderers.SpreadsheetGenerator
 files 
-    ../../build/MagiQL.Framework.Renderers.SpreadsheetGenerator/ ==> lib/net461
+    ../../build/MagiQL.Framework.Renderers.SpreadsheetGenerator/ ==> lib/net451
     !../../build/**/*.xml
 projectUrl
     https://magiql.github.io

@@ -4,7 +4,7 @@ authors Jon Menzies Smith
 description
     MagiQL :: MagiQL Service WebAPI StructureMap
 files 
-    ../../build/MagiQL.Service.WebAPI.StructureMap/ ==> lib/net461
+    ../../build/MagiQL.Service.WebAPI.StructureMap/ ==> lib/net451
     !../../build/**/*.xml
 projectUrl
     https://magiql.github.io
