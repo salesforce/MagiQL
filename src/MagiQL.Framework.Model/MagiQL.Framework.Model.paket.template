@@ -4,8 +4,10 @@ authors Jon Menzies Smith
 description
     MagiQL :: Framework Model
 files 
-    ../../build/MagiQL.Framework.Model/ ==> lib/net451
+    ../../build/MagiQL.Framework.Model/MagiQL.Framework.Model.* ==> lib/net451
     !../../build/**/*.xml
+dependencies
+    Newtonsoft.Json >= 6.0.6
 projectUrl
     https://magiql.github.io
 licenseUrl

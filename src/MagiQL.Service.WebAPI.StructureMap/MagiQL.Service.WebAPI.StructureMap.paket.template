@@ -4,8 +4,21 @@ authors Jon Menzies Smith
 description
     MagiQL :: MagiQL Service WebAPI StructureMap
 files 
-    ../../build/MagiQL.Service.WebAPI.StructureMap/ ==> lib/net451
+    ../../build/MagiQL.Service.WebAPI.StructureMap/MagiQL.Service.WebAPI.StructureMap.* ==> lib/net451
     !../../build/**/*.xml
+dependencies    
+    Microsoft.AspNet.WebApi.Client >= 5.2.3
+    Microsoft.AspNet.WebApi.Core >= 5.2.3
+    Microsoft.AspNet.WebApi.WebHost >= 5.2.3
+    Microsoft.Web.Infrastructure >= 1.0.0.0
+    Newtonsoft.Json >= 6.0.4
+    structuremap ~> 3.1.6.186
+    WebActivatorEx >= 2.1.0
+    MagiQL.DataAdapters.Infrastructure.Sql
+    MagiQL.Framework 
+    MagiQL.Framework.Interfaces
+    MagiQL.Framework.Renderers.SpreadsheetGenerator
+    MagiQL.Service.Interfaces
 projectUrl
     https://magiql.github.io
 licenseUrl

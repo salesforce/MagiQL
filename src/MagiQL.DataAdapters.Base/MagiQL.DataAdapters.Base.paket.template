@@ -4,8 +4,14 @@ authors Jon Menzies Smith
 description
     MagiQL :: DataAdapters Base
 files 
-    ../../build/MagiQL.DataAdapters.Base/ ==> lib/net451
+    ../../build/MagiQL.DataAdapters.Base/MagiQL.Reports.DataAdapters.Base.* ==> lib/net451 
     !../../build/**/*.xml 
+dependencies
+    SqlModeller >= 1.0.0.7
+    MagiQL.DataAdapters.Infrastructure.Sql
+    MagiQL.Framework 
+    MagiQL.Framework.Interfaces
+    MagiQL.Framework.Model
 projectUrl
     https://magiql.github.io
 licenseUrl

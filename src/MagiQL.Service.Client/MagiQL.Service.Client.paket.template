@@ -4,13 +4,16 @@ authors Jon Menzies Smith
 description
     MagiQL :: API Client
 files 
-    ../../build/MagiQL.Service.Client/ ==> lib/net451
+    ../../build/MagiQL.Service.Client/MagiQL.Service.Client.* ==> lib/net451
     !../../build/**/*.xml
+dependencies
+    Newtonsoft.Json >= 6.0.6
+    RestSharp >= 104.4.0
 frameworkAssemblies
     System.Configuration
     System.Data
     System.Net.Http
-        System.Net.Http.Formatting
+    System.Net.Http.Formatting
 projectUrl
     https://magiql.github.io
 licenseUrl

@@ -4,8 +4,14 @@ authors Jon Menzies Smith
 description
     MagiQL :: Framework Repositories
 files 
-    ../../build/MagiQL.Framework.Repositories/ ==> lib/net451
+    ../../build/MagiQL.Framework.Repositories/MagiQL.Framework.Repositories.dll ==> lib/net451
+    ../../build/MagiQL.Framework.Repositories/MagiQL.Framework.Repositories.pdb ==> lib/net451
     !../../build/**/*.xml
+dependencies
+    Dapper >= 1.38
+    DapperExtensions >= 1.4.4
+    MagiQL.Framework.Interfaces
+    MagiQL.Framework.Model
 projectUrl
     https://magiql.github.io
 licenseUrl

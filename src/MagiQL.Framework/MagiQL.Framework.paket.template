@@ -4,8 +4,15 @@ authors Jon Menzies Smith
 description
     MagiQL :: Framework
 files 
-    ../../build/MagiQL.Framework/ ==> lib/net451
+    ../../build/MagiQL.Framework/MagiQL.Framework.dll ==> lib/net451
+    ../../build/MagiQL.Framework/MagiQL.Framework.pdb ==> lib/net451
     !../../build/**/*.xml
+dependencies
+    MagiQL.DataAdapters.Infrastructure.Sql
+    MagiQL.Framework.Interfaces
+    MagiQL.Framework.Model
+    MagiQL.Framework.Renderers.SpreadsheetGenerator
+    MagiQL.Service.Interfaces
 projectUrl
     https://magiql.github.io
 licenseUrl
