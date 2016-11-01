@@ -9,8 +9,8 @@ files
 dependencies
     DocumentFormat.OpenXml ~> 1.0
     SpreadsheetLight ~> 3.4.4
-    MagiQL.Framework.Interfaces
-    MagiQL.Framework.Model
+    MagiQL.Framework.Interfaces ~> CURRENTVERSION
+    MagiQL.Framework.Model ~> CURRENTVERSION
 projectUrl
     https://magiql.github.io
 licenseUrl

@@ -11,8 +11,8 @@ dependencies
     Microsoft.AspNet.WebApi.Core >= 5.2.3 
     Microsoft.AspNet.WebApi.WebHost >= 5.2.3 
     Newtonsoft.Json >= 6.0.6 
-    MagiQL.Framework.Model
-    MagiQL.Service.Interfaces
+    MagiQL.Framework.Model ~> CURRENTVERSION
+    MagiQL.Service.Interfaces ~> CURRENTVERSION
 projectUrl
     https://magiql.github.io
 licenseUrl

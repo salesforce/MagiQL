@@ -7,7 +7,7 @@ files
     ../../build/MagiQL.Service.Interfaces/MagiQL.Service.Interfaces.* ==> lib/net451
     !../../build/**/*.xml
 dependencies    
-    MagiQL.Framework.Model
+    MagiQL.Framework.Model ~> CURRENTVERSION
 projectUrl
     https://magiql.github.io
 licenseUrl

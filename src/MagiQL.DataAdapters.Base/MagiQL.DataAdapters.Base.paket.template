@@ -8,10 +8,10 @@ files
     !../../build/**/*.xml 
 dependencies
     SqlModeller >= 1.0.0.7
-    MagiQL.DataAdapters.Infrastructure.Sql
-    MagiQL.Framework 
-    MagiQL.Framework.Interfaces
-    MagiQL.Framework.Model
+    MagiQL.DataAdapters.Infrastructure.Sql ~> CURRENTVERSION
+    MagiQL.Framework  ~> CURRENTVERSION
+    MagiQL.Framework.Interfaces ~> CURRENTVERSION
+    MagiQL.Framework.Model ~> CURRENTVERSION
 projectUrl
     https://magiql.github.io
 licenseUrl

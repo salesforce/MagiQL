@@ -14,11 +14,11 @@ dependencies
     Newtonsoft.Json >= 6.0.4
     structuremap ~> 3.1.6.186
     WebActivatorEx >= 2.1.0
-    MagiQL.DataAdapters.Infrastructure.Sql
-    MagiQL.Framework 
-    MagiQL.Framework.Interfaces
-    MagiQL.Framework.Renderers.SpreadsheetGenerator
-    MagiQL.Service.Interfaces
+    MagiQL.DataAdapters.Infrastructure.Sql ~> CURRENTVERSION
+    MagiQL.Framework ~> CURRENTVERSION
+    MagiQL.Framework.Interfaces ~> CURRENTVERSION
+    MagiQL.Framework.Renderers.SpreadsheetGenerator ~> CURRENTVERSION
+    MagiQL.Service.Interfaces ~> CURRENTVERSION
 projectUrl
     https://magiql.github.io
 licenseUrl
