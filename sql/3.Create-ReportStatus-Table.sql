@@ -1,0 +1,20 @@
+CREATE TABLE [dbo].[ReportStatus](
+	[ID] [BIGINT] IDENTITY(1,1) NOT NULL,
+	[OrganizationId] [INT] NULL,
+	[Platform] [NVARCHAR](50) NOT NULL,
+	[DateCreated] [DATETIME2](7) NOT NULL,
+	[DateUpdated] [DATETIME2](7) NULL,
+	[DateCompleted] [DATETIME2](7) NULL,
+	[StatusMessage] [NVARCHAR](255) NOT NULL,
+	[ProgressPercentage] [INT] NOT NULL,
+	[ErrorMessage] [NVARCHAR](MAX) NULL,
+	[StackTrace] [NVARCHAR](MAX) NULL,
+	[CreatedByUserId] [INT] NULL,
+	[MachineName] [NVARCHAR](255) NULL,
+ CONSTRAINT [PK_ReportStatus] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
