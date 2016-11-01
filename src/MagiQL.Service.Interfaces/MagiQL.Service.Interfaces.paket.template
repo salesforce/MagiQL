@@ -1,8 +1,8 @@
 type file
-id MagiQL.Services.Interfaces
+id MagiQL.Service.Interfaces
 authors Jon Menzies Smith
 description
-    MagiQL :: MagiQL.Services.Interfaces
+    MagiQL :: MagiQL.Service.Interfaces
 files 
     ../../build/MagiQL.Service.Interfaces/MagiQL.Service.Interfaces.* ==> lib/net451
     !../../build/**/*.xml
