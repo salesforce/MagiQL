@@ -18,21 +18,27 @@ namespace MagiQL.DataExplorer.Web.Controllers
         {
             _reportsService = new ReportsServiceClient();
         }
-         
-        public ActionResult Index(string platform, int orgId = 0)
+
+        public ActionResult Index(string platform)
         {
+            int orgId = ImpersonateController.GetOrgId(Request);
+            int userId = ImpersonateController.GetUserId(Request);
+
             ViewBag.Platform = platform;
             ViewBag.OrganizationId = orgId;
 
-            var model = _reportsService.GetColumnMappings(platform, orgId, null);
+            var model = _reportsService.GetColumnMappings(platform, orgId, userId: userId);
 
             return View(model);
         }
 
 
         [HttpGet]
-        public ActionResult Create(string platform, int orgId = 0)
+        public ActionResult Create(string platform)
         {
+
+            int orgId = ImpersonateController.GetOrgId(Request);
+
             var model = new ReportColumnMapping
             {
                 DataSourceTypeId = 1,  
@@ -91,8 +97,10 @@ namespace MagiQL.DataExplorer.Web.Controllers
 
 
         [HttpGet]
-        public ActionResult Edit(int id, string platform, int orgId = 0)
+        public ActionResult Edit(int id, string platform)
         {
+            int orgId = ImpersonateController.GetOrgId(Request);
+
             var allMappings = _reportsService.GetColumnMappings(platform, orgId, null, columnId: id);
 
             var model = allMappings.Data.First();

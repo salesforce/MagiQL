@@ -1,5 +1,8 @@
 ﻿@using Newtonsoft.Json
+@using System.Data
+@using MagiQL.Framework.Model.Columns
 @model MagiQL.Framework.Model.Columns.ReportColumnMapping
+
 
 @{
     ViewBag.Title = "Edit Column";
@@ -96,15 +99,49 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model._FieldAggregationMethodString, "Aggregation Method")
-                            @Html.TextBoxFor(model => model._FieldAggregationMethodString, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model._FieldAggregationMethodString)
+                                @{
+                                    var aggregationOptions = new List<FieldAggregationMethod>
+                                    {
+                                        FieldAggregationMethod.Average,
+                                        FieldAggregationMethod.Bit,
+                                        FieldAggregationMethod.BitMax,
+                                        FieldAggregationMethod.First,
+                                        FieldAggregationMethod.Max,
+                                        FieldAggregationMethod.Min,
+                                        FieldAggregationMethod.Sum,
+                                    }.Select(x=>new SelectListItem{Text = x.ToString(), Value = x.ToString()})
+                                    .ToList();
+                                }
+
+                                @Html.LabelFor(model => model._FieldAggregationMethodString, "Aggregation Method")
+                                @Html.DropDownListFor(model => model._FieldAggregationMethodString, aggregationOptions, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model._FieldAggregationMethodString)
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model._DbTypeString, "DB Type")
-                            @Html.TextBoxFor(model => model._DbTypeString, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model._DbTypeString)
+                            @{
+                                var dbTypeOptions = new List<DbType>
+                                    {
+                                        DbType.Boolean,
+                                        DbType.Byte,
+                                        DbType.DateTime,
+                                        DbType.Decimal,
+                                        DbType.Double,
+                                        DbType.Guid,
+                                        DbType.Int16,
+                                        DbType.Int32,
+                                        DbType.Int64,
+                                        DbType.Single,
+                                        DbType.String,
+                                        DbType.UInt16,
+                                        DbType.UInt32,
+                                        DbType.UInt64,
+                                    }.Select(x=>new SelectListItem{Text = x.ToString(), Value = x.ToString()})
+                                    .ToList();
+                                }
+                                @Html.LabelFor(model => model._DbTypeString, "DB Type")
+                                @Html.DropDownListFor(model => model._DbTypeString, dbTypeOptions, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model._DbTypeString)
                         </div>
 
                         <div class="form-group">

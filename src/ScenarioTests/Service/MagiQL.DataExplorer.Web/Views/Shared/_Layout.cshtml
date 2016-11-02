@@ -29,7 +29,10 @@
                 <ul class="nav navbar-nav">
                     @Html.Action("Platforms","Home")
                 </ul>
-                <ul class="nav navbar-nav pull-right" >
+                <ul class="nav navbar-nav pull-right">
+                    <li>
+                        @Html.Action("Form","Impersonate")
+                    </li>
                     <li>@Html.ActionLink("Column Manager", "Index", "ColumnManager")</li>
                 </ul>
             </div>

@@ -9,6 +9,7 @@ using MagiQL.Framework.Model.Response;
 using MagiQL.Framework.Model.Response.Base;
 using MagiQL.Service.Interfaces;
 using MagiQL.Service.Client;
+using System.Data;
 
 namespace MagiQL.DataExplorer.Web.Controllers
 {
@@ -21,8 +22,10 @@ namespace MagiQL.DataExplorer.Web.Controllers
             _reportsService = new ReportsServiceClient();
         }
          
-        public ActionResult Index(string platform = null, int orgId = 1)
+        public ActionResult Index(string platform = null)
         {
+            int orgId = ImpersonateController.GetOrgId(Request);
+
             if (platform == null)
             {
                 return SelectProvider();
@@ -42,7 +45,8 @@ namespace MagiQL.DataExplorer.Web.Controllers
             } 
 
             var filters = new List<SearchRequestFilter>(); 
-            LoadFilters(filters); 
+            LoadFilters(filters);
+            var textFilterColumns = LoadTextColumns();
 
             var selectedCols = new List<SelectedColumn>();
 
@@ -72,7 +76,8 @@ namespace MagiQL.DataExplorer.Web.Controllers
                 TemporalAggregation = temporalAggregation,
                 ExcludeRecordsWithNoStats = excludeRecordsWithNoStats,
                 DebugMode = debug,
-                DateRangeType = dateRangeType
+                DateRangeType = dateRangeType,
+                TextFilterColumns = textFilterColumns
             };
              
             searchRequest.DateStart = startDate;
@@ -93,7 +98,7 @@ namespace MagiQL.DataExplorer.Web.Controllers
            
             if (export)
             {
-                return Export(platform, orgId, searchRequest);
+                return Export(platform, searchRequest);
             } 
             
             var sw = new Stopwatch();
@@ -105,6 +110,29 @@ namespace MagiQL.DataExplorer.Web.Controllers
             ViewBag.SearchElapsedMilliseconds = sw.ElapsedMilliseconds;
 
             return View(result);
+        }
+
+        private List<SelectedColumn> LoadTextColumns()
+        {
+            var textFields = Request["textField"];
+
+            if (!string.IsNullOrEmpty(textFields))
+            {
+                var textColumns = new List<SelectedColumn>();
+                var textFieldsList = textFields.Split(',');
+
+                for (int i = 0; i < textFieldsList.Count(); i++)
+                {
+                    if (!string.IsNullOrEmpty(textFieldsList[i]))
+                    {
+                        textColumns.Add(new SelectedColumn() { ColumnId = int.Parse(textFieldsList[i]) });
+                    }
+                }
+
+                return textColumns;
+            }
+
+            return null;
         }
 
         private void LoadFilters(List<SearchRequestFilter> filters)
@@ -134,12 +162,15 @@ namespace MagiQL.DataExplorer.Web.Controllers
             }
         }
 
-        public ActionResult Export(string platform, int orgId, SearchRequest searchRequest)
+        public ActionResult Export(string platform, SearchRequest searchRequest)
         {
+            int orgId = ImpersonateController.GetOrgId(Request);
+            int userId = ImpersonateController.GetUserId(Request);
+
             var sw = new Stopwatch();
             sw.Start();
 
-            var result = _reportsService.GenerateReport(platform, orgId, Configuration.UserId, searchRequest);
+            var result = _reportsService.GenerateReport(platform, orgId, userId, searchRequest);
 
             sw.Stop();
             ViewBag.SearchElapsedMilliseconds = sw.ElapsedMilliseconds;
@@ -168,9 +199,13 @@ namespace MagiQL.DataExplorer.Web.Controllers
         }
 
 
-        public ActionResult SearchForm(string platform, int orgId)
+        public ActionResult SearchForm(string platform)
         {
-            var columns = _reportsService.GetSelectableColumns(platform, orgId, Configuration.UserId);
+            int orgId = ImpersonateController.GetOrgId(Request);
+            int userId = ImpersonateController.GetUserId(Request);
+            ViewBag.OrganizationId = orgId;
+
+            var columns = _reportsService.GetSelectableColumns(platform, orgId, userId);
 
             var model = columns.Data.OrderBy(x=> x.MainCategory == "Date" ? 1 : 2).ThenBy(x=>x.Id).ToList();
 
@@ -180,7 +215,28 @@ namespace MagiQL.DataExplorer.Web.Controllers
                 ViewBag.SelectedColumnName = idColulmn.UniqueName;
             }
 
+            // get the text columns for text filter column selector
+
+            var columnMappings = _reportsService.GetColumnMappings(platform, orgId, userId);
+            var textColumns = columnMappings.Data.Where(x => IsStringType(x.DbType));
+
+            ViewBag.TextColumnIds = textColumns.Select(x => x.Id.ToString()).ToList();
+
             return PartialView("SearchForm", model);
+        }
+
+        public static bool IsStringType(DbType value)
+        {
+            switch (value)
+            {
+                case DbType.AnsiString:
+                case DbType.AnsiStringFixedLength:
+                case DbType.String:
+                case DbType.StringFixedLength:
+                    return true;
+            }
+
+            return false;
         }
 
         public ActionResult SelectProvider()

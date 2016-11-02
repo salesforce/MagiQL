@@ -5,6 +5,8 @@
 
 
     List<SelectListItem> columnSelectList = BuildList(Model.ToList(), false, ViewBag.SelectedColumnName);
+    List<SelectListItem> textColumnSelectList = BuildList(Model.ToList(), false, ViewBag.SelectedColumnName);
+    textColumnSelectList = textColumnSelectList.Where(x => ViewBag.TextColumnIds.Contains(x.Value)).ToList();
     List<SelectListItem> groupSelectList = BuildList(Model.ToList(), true, ViewBag.SelectedColumnName);
     List<SelectListItem> summarizeSelectList = BuildList(Model.ToList(), true, ViewBag.SelectedColumnName);
 
@@ -121,7 +123,30 @@
         @Html.TextBox("q", null, new { @class = "form-control  form-control-sm" })
     </div>
 
-    <div>
+
+    <div style="overflow: hidden">
+        <label>Search Columns</label>
+        <div id="FirstTextColumn">
+            <div class="form-group filter-group">
+                <div>
+                    <div class="combobox-textfield pull-left">@Html.DropDownList("textField-val", textColumnSelectList, new {@class = "combobox"})</div>
+                    <a href="javascript:void(0)" id="AddTextColumn" class="btn btn-default pull-left">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="TextColumnsTemplate" style="display:none;">
+        <div class="filter-group" style="clear: both">
+            <input type="hidden" name="textField" value="" />
+            <div class="textField pull-left"></div>
+            <div class="pull-right"><a href="javascript:void(0)" id="RemoveTextColumn" class="pull-right btn btn-default" style="padding:3px 5px">x</a></div>
+        </div>
+    </div>
+
+    <div id="ExtraTextColumns"></div>
+
+    <div style="clear: left; padding-top: 1em;">
         <label>Add Filters</label>
         <div id="FirstFilter">
             <div class="form-group filter-group">
@@ -144,21 +169,21 @@
         </div>
 
 
-   
-        
+
+
         <div id="ExtrafiltersTemplate" style="display:none;">
             <div class="filter-group" style="clear: both">
                 <input type="hidden" name="filterField" value="" />
                 <input type="hidden" name="filterMode" value="" />
                 <input type="hidden" name="filterValue" value="" />
-                <div class="filterField pull-left"  ></div>
+                <div class="filterField pull-left"></div>
                 <div class="pull-left filterMode">></div>
                 <div class="pull-left filterValue">10</div>
                 <div class="pull-right"><a href="javascript:void(0)" id="RemoveFilter" class="pull-right btn btn-default" style="padding:3px 5px">x</a></div>
             </div>
         </div>
 
-         <div id="ExtraFilters"></div>
+        <div id="ExtraFilters"></div>
     </div>
 </div>
 <hr />
@@ -179,40 +204,80 @@
     #ExtraFilters { 
         line-height: 30px;
     }
+
+    #ExtraTextColumns {
+        line-height: 30px;
+    } 
+    .combobox-textfield {
+        width:218px
+    }
 </style>
 <script>
-    $(document).ready(function() { 
+    $(document)
+        .ready(function() {
 
-        $("#AddFilter").bind("click", function () {
-            var nFilters = $("#ExtrafiltersTemplate>div.filter-group").clone(true, true);
+            $("#AddFilter")
+                .bind("click",
+                    function() {
+                        var nFilters = $("#ExtrafiltersTemplate>div.filter-group").clone(true, true);
 
-            var filterFieldVal = $("#FirstFilter").find("select[name='filterField-val'] option:selected");
-            var filterModeVal = $("#FirstFilter").find("select[name='filterMode-val']");
-            var filterValueVal = $("#FirstFilter").find("input[name='filterValue-val']");
-            
-            var filterField = $(nFilters).find("input[name*='filterField']");
-            var filterMode = $(nFilters).find("input[name*='filterMode']");
-            var filterValue = $(nFilters).find("input[name*='filterValue']");
+                        var filterFieldVal = $("#FirstFilter").find("select[name='filterField-val'] option:selected");
+                        var filterModeVal = $("#FirstFilter").find("select[name='filterMode-val']");
+                        var filterValueVal = $("#FirstFilter").find("input[name='filterValue-val']");
 
-            $(filterField).val($(filterFieldVal).attr("value"));
-            $(filterMode).val($(filterModeVal).val());
-            $(filterValue).val($(filterValueVal).val());
+                        var filterField = $(nFilters).find("input[name*='filterField']");
+                        var filterMode = $(nFilters).find("input[name*='filterMode']");
+                        var filterValue = $(nFilters).find("input[name*='filterValue']");
 
-            $(nFilters).find(".filterField").html($(filterFieldVal).text());
-            $(nFilters).find(".filterMode").html($(filterModeVal).val());
-            $(nFilters).find(".filterValue").html($(filterValueVal).val());
+                        $(filterField).val($(filterFieldVal).attr("value"));
+                        $(filterMode).val($(filterModeVal).val());
+                        $(filterValue).val($(filterValueVal).val());
 
-            $(nFilters).prependTo("#ExtraFilters");
+                        $(nFilters).find(".filterField").html($(filterFieldVal).text());
+                        $(nFilters).find(".filterMode").html($(filterModeVal).val());
+                        $(nFilters).find(".filterValue").html($(filterValueVal).val());
 
+                        $(nFilters).prependTo("#ExtraFilters");
+
+
+                    });
+
+            $("#RemoveFilter")
+                .bind("click",
+                    function() {
+                        $(this).closest(".filter-group").remove();
+                    });
 
         });
+</script>
 
-        $("#RemoveFilter").bind("click", function () {
-            $(this).closest(".filter-group").remove(); 
-        });
+
+<script>
+    $(document)
+    .ready(function() {
+
+        $("#AddTextColumn")
+            .bind("click",
+                function () {
+
+                    var nFilters = $("#TextColumnsTemplate>div.filter-group").clone(true, true);
+                    var filterFieldVal = $("#FirstTextColumn").find("select[name='textField-val'] option:selected");
+                    var filterField = $(nFilters).find("input[name*='textField']");
+
+                    $(filterField).val($(filterFieldVal).attr("value"));
+                    $(nFilters).find(".textField").html($(filterFieldVal).text());
+                    $(nFilters).prependTo("#ExtraTextColumns");
+                });
+
+        $("#RemoveTextColumn")
+            .bind("click",
+                function () {
+                    $(this).closest(".filter-group").remove();
+                });
 
     });
 </script>
+
 
 @Html.Partial("SearchFormColumns", columnSelectList)
 

@@ -6,6 +6,25 @@
     background: #1F2842;
 }
 
+#impersonate-form {
+    color: #ccc;
+    margin-top:10px;
+}
+ 
+
+#impersonate-form .form-control {
+    display: inline-block;
+    width: 100px;
+    background: #575D70;
+    color: #fff;
+    
+}
+#impersonate-form label {
+    margin-left: 20px;
+    margin-right: 10px;
+    
+} 
+
 .sidebar {
     width: 300px !important;
 }

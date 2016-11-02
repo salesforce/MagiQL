@@ -23,6 +23,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,6 +96,7 @@
     <Compile Include="Controllers\ColumnUpdatePostModel.cs" />
     <Compile Include="Controllers\ExportStatusController.cs" />
     <Compile Include="Controllers\ColumnManagerController.cs" />
+    <Compile Include="Controllers\ImpersonateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -164,6 +166,7 @@
     <Content Include="Views\ColumnManager\Schema.cshtml" />
     <Content Include="Views\ColumnManager\DependantColumns.cshtml" />
     <Content Include="Views\Home\Platforms.cshtml" />
+    <Content Include="Views\Impersonate\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
